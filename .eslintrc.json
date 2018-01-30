@@ -1,0 +1,11 @@
+{
+    "extends": [
+        "eslint-config-alloy/typescript"
+    ],
+    "globals": {
+
+    },
+    "rules": {
+        "no-unused-vars": "off"
+    }
+}
