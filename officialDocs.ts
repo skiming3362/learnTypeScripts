@@ -176,3 +176,41 @@ class Clock implements ClockInterface {
         this.currentTime = d;
     }
 }
+
+// 类静态部分与实例部分的区别
+
+interface ClockConstructor {
+    new(hour: number, minute: number): ClockInterfaceT;
+}
+interface ClockInterfaceT {
+    tick();
+}
+
+function createClock(Ctor: ClockConstructor, hour: number, minute: number): ClockInterfaceT {
+    return new Ctor(hour, minute);
+}
+
+class DigitalClock implements ClockInterfaceT {
+    h: number;
+    constructor(h: number, m: number) {
+        this.h = h;
+    }
+    tick() {
+        console.log('beep beep');
+    }
+}
+class AnalogClock implements ClockInterfaceT {
+    m: number;
+    constructor(h: number, m: number) {
+        this.m = m;
+    }
+    tick() {
+        console.log('tick tock');
+    }
+}
+
+let digital = createClock(DigitalClock, 12, 17);
+let analog = createClock(AnalogClock, 7, 32);
+
+// 继承接口
+
