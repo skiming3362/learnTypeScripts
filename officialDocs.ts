@@ -1,6 +1,5 @@
 // 基础类型
 let list: number[] = [1, 2, 3];
-const a = 1;
 let list2: Array<number> = [1, 2, 3];
 
 let x: [string, number];
@@ -8,7 +7,7 @@ let x: [string, number];
 x = ['', 2];
 x[2] = true; //访问越界元素， 使用联合类型替代
 // enum
-enum Color {Red = 1, Green = 2, Blue = 4}
+enum Color { Red = 1, Green = 2, Blue = 4 }
 
 let c: Color = Color.Green;
 
@@ -44,4 +43,20 @@ let someValue: any = 'this is a string';
 
 let strLength: number = (<string>someValue).length; // (someValue as string).length
 
+// 变量声明
 
+let [first, second] = [1, 2];
+
+[first, second] = [second, first];
+
+let [first2, ...rest] = [1, 2, 3, 4];
+
+let o = {
+    a: 1,
+    b: '',
+    c: 'bar',
+};
+
+let { a, b = 'foo' } = o;
+
+let plus = [0, ...rest];
