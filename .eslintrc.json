@@ -2,6 +2,11 @@
     "extends": [
         "eslint-config-alloy/typescript"
     ],
+    "parserOptions": {
+        "ecmaFeatures": {
+            "jsx": false
+        }
+    },
     "globals": {
 
     },
