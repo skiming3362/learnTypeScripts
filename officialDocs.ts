@@ -214,3 +214,40 @@ let analog = createClock(AnalogClock, 7, 32);
 
 // 继承接口
 
+interface Shape {
+    color: string;
+}
+
+interface PenStroke {
+    penWidth: number;
+}
+
+interface Square extends Shape, PenStroke {
+    sideLength: number;
+}
+
+let square = <Square>{};
+
+square.color = 'blue';
+square.sideLength = 10;
+square.penWidth = 5.0;
+
+// 混合类型, 比如一个对象可以同时作为函数和对象使用
+
+interface Counter {
+    (start: number): string;
+    interval: number;
+    reset(): void;
+}
+
+function getCounter(): Counter {
+    let counter = <Counter> function (start) {};
+    counter.interval = 123;
+    counter.reset = () => {};
+    return counter;
+}
+
+let c1 = getCounter();
+c1(10);
+c1.reset();
+c1.interval = 5;
