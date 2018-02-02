@@ -251,3 +251,34 @@ let c1 = getCounter();
 c1(10);
 c1.reset();
 c1.interval = 5;
+
+// 接口继承类
+
+class Control {
+    private state: any;
+}
+
+interface SelectableControl extends Control {
+    select(): void;
+}
+
+class Button extends Control implements SelectableControl {
+    select() {
+        // TODO
+    }
+}
+
+class TextBox extends Control {
+
+}
+
+// 错误：“Image”类型缺少“state”属性。
+class Image implements SelectableControl {
+    select() {
+        // TODO
+    }
+}
+
+class Location {
+
+}
