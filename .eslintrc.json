@@ -12,6 +12,8 @@
     },
     "rules": {
         "no-unused-vars": "off",
-        "no-trailing-spaces": 0
+        "no-trailing-spaces": 0,
+        "no-useless-constructor": 0,
+        "no-empty-function": 0
     }
 }

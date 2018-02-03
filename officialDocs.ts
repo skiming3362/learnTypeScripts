@@ -241,9 +241,9 @@ interface Counter {
 }
 
 function getCounter(): Counter {
-    let counter = <Counter> function (start) {};
+    let counter = <Counter>function (start) { };
     counter.interval = 123;
-    counter.reset = () => {};
+    counter.reset = () => { };
     return counter;
 }
 
@@ -279,6 +279,103 @@ class Image implements SelectableControl {
     }
 }
 
-class Location {
+class LocationS {
 
 }
+
+// 类
+
+// 继承 super this
+
+// 公共，私有与受保护的修饰符
+
+class Animals {
+    // private name: string;
+    constructor(private name: string) { this.name = name }
+}
+
+let cat = new Animals('cat').name;
+
+class Person {
+    protected readonly name: string;
+    protected constructor(name: string) { this.name = name }
+}
+
+class Employee extends Person {
+    private department: string;
+    private _fullName: string;
+    constructor(name: string, department: string) {
+        super(name);
+        this.department = department;
+    }
+    test() {
+        console.log(this.name);
+        this.name = 'asd';
+    }
+
+    get fullName(): string {
+        return this._fullName;
+    }
+
+    set fullName(newName: string) {
+        if (newName.length > 1) {
+            this._fullName = newName;
+        } else {
+            console.log('the name is not long enough');
+        }
+    }
+}
+
+let bob = new Person('bob');
+
+// 存取器 只带有 get不带有 set的存取器自动被推断为 readonly
+
+// 静态属性 存在于类上的属性
+
+class Grid {
+    static origin = { x: 0, y: 0 }
+    constructor(public scale: number) {
+
+    }
+    calculateDistanceFromOrigin(point: { x: number, y: number }) {
+        let xDist = (point.x - Grid.origin.x);
+        let yDist = (point.y - Grid.origin.y);
+        return Math.sqrt(xDist * xDist + yDist * yDist) / this.scale;
+    }
+}
+// Grid.origin = { x: 1, y: 1 };
+
+// 抽象类 一般不直接实例化， 不同于接口， 抽象类可以包含成员的实现细节
+
+abstract class AnimalT {
+    abstract makeSound(): void;
+    move(): void {
+        console.log('roaming the earth...');
+    }
+}
+
+abstract class Department {
+    constructor(public name: string) {
+
+    }
+    printName(): void {
+        console.log(this.name);
+    }
+    abstract printMeeting(): void // 必须在派生类中实现
+}
+
+class AccountingDepartment extends Department {
+    constructor() {
+        super('accounting and auditing');
+    }
+    printMeeting() {
+        console.log('this is a meeting');
+    }
+    blabla() {
+
+    }
+}
+
+let depart: Department;
+depart = new Department(); // 不能创建一个抽象类的实例
+depart = new AccountingDepartment();
