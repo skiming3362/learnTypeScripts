@@ -379,3 +379,54 @@ class AccountingDepartment extends Department {
 let depart: Department;
 depart = new Department(); // 不能创建一个抽象类的实例
 depart = new AccountingDepartment();
+
+// 函数
+
+// 可选参数， 默认参数， 剩余参数， this, 箭头函数
+
+// 重载
+
+// 泛型 (generics)
+
+function identity<T>(arg: T): T {
+    return arg;
+}
+
+let output = identity('myString');
+
+// 使用泛型变量
+
+function loggingIdentity<T>(arg: Array<T>): Array<T> {
+    console.log(arg.length);
+    return arg;
+}
+
+// 泛型类型
+
+interface GenericIdentityFn<T> {
+    (arg: T): T;
+}
+
+let myIdentity: GenericIdentityFn<number> = identity;
+
+// 泛型类
+
+class GenericNumber<T> {
+    static test: T;
+    zeroValue: T;
+    add: (x: T, y: T) => T;
+}
+
+// 泛型约束
+
+interface Lengthwise {
+    length: number;
+}
+
+function loggingIdentity2<T extends Lengthwise>(arg: T): T {
+    console.log(arg.length);
+    return arg;
+}
+
+loggingIdentity2(3);
+
