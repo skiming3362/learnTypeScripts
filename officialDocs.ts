@@ -379,3 +379,10 @@ class AccountingDepartment extends Department {
 let depart: Department;
 depart = new Department(); // 不能创建一个抽象类的实例
 depart = new AccountingDepartment();
+
+// 函数
+
+// 可选参数， 默认参数， 剩余参数， this, 箭头函数
+
+// 重载
+
