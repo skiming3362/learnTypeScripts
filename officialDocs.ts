@@ -414,7 +414,7 @@ let myIdentity: GenericIdentityFn<number> = identity;
 class GenericNumber<T> {
     static test: T;
     zeroValue: T;
-    add: (x: T, y: T)=> T;
+    add: (x: T, y: T) => T;
 }
 
 // 泛型约束
@@ -427,4 +427,6 @@ function loggingIdentity2<T extends Lengthwise>(arg: T): T {
     console.log(arg.length);
     return arg;
 }
+
+loggingIdentity2(3);
 
