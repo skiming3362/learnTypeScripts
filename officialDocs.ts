@@ -464,3 +464,7 @@ let y = [0, 1, null];
 window.onmousedown = function (event) {
     console.log(event.button);
 };
+
+// 类型兼容性
+
+// 开始 TypeScript结构化类型系统的基本规则是，如果x要兼容y，那么y至少具有与x相同的属性。
