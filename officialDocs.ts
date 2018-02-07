@@ -447,6 +447,9 @@ let nameOfUp = Direction[up]; // 'Up'
 
 const enum Enum {
     A = 1,
-    B = A * 2
+    B = A * 2,
+    C = '123'.length
 }
+
+// 类型推论
 
