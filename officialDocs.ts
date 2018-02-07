@@ -453,3 +453,14 @@ const enum Enum {
 
 // 类型推论
 
+// 基础， 一般推断发生在初始化变量和成员，设置默认参数值和决定函数返回值时
+
+// 最佳通用类型
+
+let y = [0, 1, null];
+
+// 上下文类型
+
+window.onmousedown = function (event) {
+    console.log(event.button);
+};
