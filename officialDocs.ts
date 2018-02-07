@@ -430,3 +430,23 @@ function loggingIdentity2<T extends Lengthwise>(arg: T): T {
 
 loggingIdentity2(3);
 
+// 枚举 定义一些有名字的数字常量
+
+enum Direction {
+    Up = 1,
+    Down,
+    Left,
+    Right
+}
+
+let up = Direction.Up; // 1
+
+let nameOfUp = Direction[up]; // 'Up'
+
+// 常数枚举
+
+const enum Enum {
+    A = 1,
+    B = A * 2
+}
+
