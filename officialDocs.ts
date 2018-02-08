@@ -464,3 +464,107 @@ let y = [0, 1, null];
 window.onmousedown = function (event) {
     console.log(event.button);
 };
+
+// 类型兼容性
+
+// 开始 TypeScript结构化类型系统的基本规则是，如果x要兼容y，那么y至少具有与x相同的属性。
+
+// 比较两个函数
+
+// 不同枚举类型之间不兼容
+
+enum Status { Ready, Waiting }
+
+let status2 = Status.Ready;
+
+status2 = Color.Green;
+
+// 高级类型
+
+// 交叉类型 Intersection Types
+
+function extend<T, U>(first: T, second: U): T & U {
+    let result = <T & U>;
+    for (let id in first) {
+        (<any>result)[id] = (<any>first)[id];
+    }
+    for (let id in second) {
+        if (!result.hasOwnProperty(id)) {
+            (<any>result)[id] = (<any>second)[id];
+        }
+    }
+    return result;
+}
+
+class Person2 {
+    constructor(public name: string) { }
+}
+interface Loggable {
+    log(): void;
+}
+class ConsoleLogger implements Loggable {
+    log() {
+        // 
+    }
+}
+
+var jim = extend(new Person2('Jim'), new ConsoleLogger());
+var n = jim.name;
+jim.log();
+
+// 联合类型 Union Types
+
+function padLeft(value: string, padding: any) {
+    if (typeof padding === 'number') {
+        return Array(padding + 1).join(" ") + value;
+    }
+    if (typeof padding === 'string') {
+        return padding + value;
+    }
+    throw new Error(`Expected string or number, got '${padding}'`);
+}
+
+padLeft("Hello world", 4); // returns "    Hello world"
+
+// 上面函数的改进 参数 padding: string | number
+
+// 类型保护与区分类型
+
+interface Bird {
+    fly();
+    layEggs();
+}
+
+interface Fish {
+    swim();
+    layEggs();
+}
+
+function getSmallPet(): Fish | Bird {
+    // ...
+}
+
+let pet = getSmallPet();
+pet.layEggs(); // okay
+if ((<Fish>pet).swim) {
+    (<Fish>pet).swim();
+}
+else {
+    (<Bird>pet).fly();
+}
+
+// 自定义类型保护
+
+function isFish(pet: Fish | Bird): pet is Fish {
+    return (<Fish>pet).swim !== undefined;
+}
+
+// 上面可写成 if (isFish(pet)) { pet.swim(); }
+
+// typeof 和 instanceof 类型保护
+
+// 可以为 null 的类型， 默认情况 null 和 undefined 可以值给任意类型, 开启 strictNullChecks 来避免
+var asd = 'asd';
+asd = null;
+
+// 使用了 --strictNullChecks，可选参数/属性会被自动地加上 | undefined:
