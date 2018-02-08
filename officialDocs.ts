@@ -561,3 +561,10 @@ function isFish(pet: Fish | Bird): pet is Fish {
 
 // 上面可写成 if (isFish(pet)) { pet.swim(); }
 
+// typeof 和 instanceof 类型保护
+
+// 可以为 null 的类型， 默认情况 null 和 undefined 可以值给任意类型, 开启 strictNullChecks 来避免
+var asd = 'asd';
+asd = null;
+
+// 使用了 --strictNullChecks，可选参数/属性会被自动地加上 | undefined:
