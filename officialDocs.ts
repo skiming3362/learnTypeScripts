@@ -468,3 +468,13 @@ window.onmousedown = function (event) {
 // 类型兼容性
 
 // 开始 TypeScript结构化类型系统的基本规则是，如果x要兼容y，那么y至少具有与x相同的属性。
+
+// 比较两个函数
+
+// 不同枚举类型之间不兼容
+
+enum Status { Ready, Waiting }
+
+let status2 = Status.Ready;
+
+status2 = Color.Green;
