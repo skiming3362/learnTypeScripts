@@ -478,3 +478,86 @@ enum Status { Ready, Waiting }
 let status2 = Status.Ready;
 
 status2 = Color.Green;
+
+// 高级类型
+
+// 交叉类型 Intersection Types
+
+function extend<T, U>(first: T, second: U): T & U {
+    let result = <T & U>;
+    for (let id in first) {
+        (<any>result)[id] = (<any>first)[id];
+    }
+    for (let id in second) {
+        if (!result.hasOwnProperty(id)) {
+            (<any>result)[id] = (<any>second)[id];
+        }
+    }
+    return result;
+}
+
+class Person2 {
+    constructor(public name: string) { }
+}
+interface Loggable {
+    log(): void;
+}
+class ConsoleLogger implements Loggable {
+    log() {
+        // 
+    }
+}
+
+var jim = extend(new Person2('Jim'), new ConsoleLogger());
+var n = jim.name;
+jim.log();
+
+// 联合类型 Union Types
+
+function padLeft(value: string, padding: any) {
+    if (typeof padding === 'number') {
+        return Array(padding + 1).join(" ") + value;
+    }
+    if (typeof padding === 'string') {
+        return padding + value;
+    }
+    throw new Error(`Expected string or number, got '${padding}'`);
+}
+
+padLeft("Hello world", 4); // returns "    Hello world"
+
+// 上面函数的改进 参数 padding: string | number
+
+// 类型保护与区分类型
+
+interface Bird {
+    fly();
+    layEggs();
+}
+
+interface Fish {
+    swim();
+    layEggs();
+}
+
+function getSmallPet(): Fish | Bird {
+    // ...
+}
+
+let pet = getSmallPet();
+pet.layEggs(); // okay
+if ((<Fish>pet).swim) {
+    (<Fish>pet).swim();
+}
+else {
+    (<Bird>pet).fly();
+}
+
+// 自定义类型保护
+
+function isFish(pet: Fish | Bird): pet is Fish {
+    return (<Fish>pet).swim !== undefined;
+}
+
+// 上面可写成 if (isFish(pet)) { pet.swim(); }
+
