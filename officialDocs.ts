@@ -509,7 +509,7 @@ class ConsoleLogger implements Loggable {
 }
 
 var jim = extend(new Person2('Jim'), new ConsoleLogger());
-var n = jim.name;
+var nr = jim.name;
 jim.log();
 
 // 联合类型 Union Types
@@ -568,3 +568,155 @@ var asd = 'asd';
 asd = null;
 
 // 使用了 --strictNullChecks，可选参数/属性会被自动地加上 | undefined:
+
+// 类型保护和类型断言
+function fixed(name: string | null): string {
+    function postfix(epithet: string) {
+      return name!.charAt(0) + '.  the ' + epithet; // ok, ! 从name的类型中去除了 null 和 undefined
+    }
+    name = name || "Bob";
+    return postfix("great");
+  }
+
+// 类型别名
+
+type StrOrNum = string | number;
+
+let qwe: StrOrNum = true;
+
+// 字符串字面量类型
+
+type Easing = 'ease-in' | 'ease-out' | 'ease-in-out';
+
+// 数字字面量类型
+function foo(x: number) {
+    if (x !== 1 || x !== 2) {
+        // 当 x与 2进行比较的时候，它的值必须为 1，这就意味着上面的比较检查是非法的。
+    }
+}
+
+// 可辨识联合 discriminated unions
+
+interface Square {
+    kind: "square";
+    size: number;
+}
+interface Rectangle {
+    kind: "rectangle";
+    width: number;
+    height: number;
+}
+interface Circle {
+    kind: "circle";
+    radius: number;
+}
+
+type Shape2 = Square | Rectangle | Circle | Triangle;
+
+function area(s: Shape2): number {
+    switch (s.kind) {
+        case "square": return s.size * s.size;
+        case "rectangle": return s.height * s.width;
+        case "circle": return Math.PI * s.radius ** 2;
+        default: return assertNever(s);
+    }
+}
+
+// 完整性检查
+
+interface Triangle {
+    kind: 'triangle';
+}
+
+function assertNever(x: never): never {
+    throw new Error("Unexpected object: " + x);
+}
+
+// 多态的this类型
+
+class BasicCalculator {
+    public constructor(protected value: number = 0) { }
+    public currentValue(): number {
+        return this.value;
+    }
+    public add(operand: number): this {
+        this.value += operand;
+        return this;
+    }
+    public multiply(operand: number): this {
+        this.value *= operand;
+        return this;
+    }
+    // ... other operations go here ...
+}
+
+let v = new BasicCalculator(2)
+            .multiply(5)
+            .add(1)
+            .currentValue();
+
+class ScientificCalculator extends BasicCalculator {
+    public constructor(value = 0) {
+        super(value);
+    }
+    public sin() {
+        this.value = Math.sin(this.value);
+        return this;
+    }
+    // ... other operations go here ...
+}
+
+let v2 = new ScientificCalculator(2)
+        .multiply(5)
+        .sin()
+        .add(1)
+        .currentValue();
+
+/* 
+* 如果没有 this类型， ScientificCalculator就不能够在继承 BasicCalculator的同时还保持接口的连贯性。 
+* multiply将会返回 BasicCalculator，它并没有 sin方法。 
+* 然而，使用 this类型， multiply会返回 this，在这里就是 ScientificCalculator。
+*/
+
+// 索引类型
+
+function pluck<T, K extends keyof T>(o: T, names: K[]): T[K][] {
+    return names.map(n => o[n]);
+  }
+  
+interface Person3 {
+    name: string;
+    age: number;
+}
+let person3: Person3 = {
+    name: 'Jarid',
+    age: 35,
+};
+let strings: string[] = pluck(person3, ['name']); // ok, string[]
+
+let personProps: keyof Person3; // 索引类型查询操作符, keyof
+
+function getProperty<T, K extends keyof T>(o: T, name: K): T[K] { // T[K] 索引访问操作符
+    return o[name]; // o[name] is of type T[K]
+}
+
+let name2 = getProperty(person3, 'name');
+let age2 = getProperty(person3, 'age');
+let unknown = getProperty(person3, 'unknown');
+
+// 映射类型
+
+/* 
+** TypeScript提供了从旧类型中创建新类型的一种方式 — 映射类型。 
+** 在映射类型里，新类型以相同的形式去转换旧类型里每个属性。 例如，你可以令每个属性成为 readonly类型或可选的。
+*/
+
+type Readonly<T> = {
+    readonly [P in keyof T]: T[P];
+}
+type Partial<T> = {
+    [P in keyof T]?: T[P];
+}
+
+type PersonParticial = Partial<Person3>
+type ReadonlyPerson = Readonly<Person3>;
