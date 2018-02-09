@@ -706,3 +706,17 @@ let unknown = getProperty(person3, 'unknown');
 
 // 映射类型
 
+/* 
+** TypeScript提供了从旧类型中创建新类型的一种方式 — 映射类型。 
+** 在映射类型里，新类型以相同的形式去转换旧类型里每个属性。 例如，你可以令每个属性成为 readonly类型或可选的。
+*/
+
+type Readonly<T> = {
+    readonly [P in keyof T]: T[P];
+}
+type Partial<T> = {
+    [P in keyof T]?: T[P];
+}
+
+type PersonParticial = Partial<Person3>
+type ReadonlyPerson = Readonly<Person3>;
