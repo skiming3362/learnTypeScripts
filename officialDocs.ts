@@ -720,3 +720,43 @@ type Partial<T> = {
 
 type PersonParticial = Partial<Person3>
 type ReadonlyPerson = Readonly<Person3>;
+
+// Symbols
+
+let sym1 = Symbol();
+
+let sym2 = Symbol('key');
+
+let obj2 = {
+    [sym1]: 'value'
+};
+
+console.log(obj2[sym1]); // value
+
+// Symbols也可以与计算出的属性名声明相结合来声明对象的属性和类成员。
+
+const getClassNameSymbol = Symbol();
+
+class C {
+    [getClassNameSymbol](){
+       return "C";
+    }
+}
+
+let c2 = new C();
+let className = c2[getClassNameSymbol](); // "C"
+
+// 迭代器和生成器
+
+// for..of 语句
+// for..of会遍历可迭代的对象，调用对象上的Symbol.iterator方法。
+let pets = new Set(["Cat", "Dog", "Hamster"]);
+pets["species"] = "mammals";
+
+for (let pet in pets) {
+    console.log(pet); // "species"
+}
+
+for (let pet of pets) {
+    console.log(pet); // "Cat", "Dog", "Hamster"
+}

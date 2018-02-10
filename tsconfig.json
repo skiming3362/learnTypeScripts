@@ -1,5 +1,9 @@
 {
     "compilerOptions": {
-        "strictNullChecks": true
+        "strictNullChecks": true,
+        "lib": [
+            "dom", "scripthost", "dom.iterable", "es2015"
+        ],
+        "target": "es5"
     }
 }
