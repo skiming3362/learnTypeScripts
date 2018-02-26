@@ -760,3 +760,11 @@ for (let pet in pets) {
 for (let pet of pets) {
     console.log(pet); // "Cat", "Dog", "Hamster"
 }
+
+// 模块
+
+// 导出， 任何声明（比如变量，函数，类，类型别名或接口）都能够通过添加export关键字来导出。
+
+// 若要导入一个使用了export =的模块时，必须使用TypeScript提供的特定语法import module = require("module")。
+
+// 如果仅导出单个 class 或 function，使用 export default， 如果要导出多个对象，把它们放在顶层里导出， 当导入的时候 明确地列出导入的名字， 使用命名空间导入模式当你要导出大量内容的时候 （ import * as  ）
